@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodecFake-Kids: Towards Detecting Neural Codec Synthesized Children Voice Deepfakes</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafbfc;
+      color: #1a202c;
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0f766e 0%, #1e3a8a 100%);
+      color: white;
+      padding: 26px 40px;
+      text-align: center;
+    }
+
+    .title {
+      font-weight: 800;
+      line-height: 1.15;
+      font-size: 22px;
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: clip;
+      margin: 0 auto 10px;
+    }
+
+    .conference-tag {
+      font-size: 18px;
+      opacity: 0.95;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .top-links {
+      padding: 18px 40px 0;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      background: white;
+    }
+
+    .top-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      color: #2d3748;
+      background: #f3f6ff;
+      border: 1px solid #e2e8f0;
+      transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+    }
+
+    .top-btn:hover {
+      background: #eaf0ff;
+      border-color: #cbd5e0;
+      transform: translateY(-1px);
+    }
+
+    .content { padding: 32px 40px 40px; }
+
+    .tldr-section { margin-bottom: 32px; }
+
+    .tldr-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 12px;
+    }
+
+    .tldr-text {
+      font-size: 15px;
+      color: #4a5568;
+      margin-bottom: 18px;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 10px 18px rgba(139, 92, 246, 0.18);
+      transition: transform 0.18s ease, filter 0.18s ease;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .samples-section { margin-bottom: 40px; }
+
+    .samples-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #2d3748;
+    }
+
+    .samples-desc {
+      color: #4a5568;
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      font-size: 14px;
+    }
+
+    th {
+      background: #f7fafc;
+      padding: 16px 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #4a5568;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 16px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+
+    tr:hover { background: #f8faff; }
+
+    .audio-cell { width: 140px; }
+
+    audio {
+      width: 100%;
+      height: 32px;
+      border-radius: 6px;
+    }
+
+    .lang-pill {
+      display: inline-block;
+      background: #e6fffa;
+      color: #00a28b;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .muted {
+      color: #718096;
+      font-size: 13px;
+    }
+
+    .footer {
+      background: #f7fafc;
+      padding: 24px 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #718096;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 1100px) {
+      .title { white-space: normal; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .header { padding: 22px 16px; }
+      .title { font-size: 18px; }
+      .conference-tag { font-size: 16px; }
+      .top-links { padding: 14px 16px 0; gap: 10px; }
+      .content { padding: 24px 20px; }
+      .audio-cell { width: 120px; }
+      audio { height: 28px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">CodecFake-Kids: Towards Detecting Neural Codec Synthesized Children Voice Deepfakes</div>
+      <div class="conference-tag">Submitted to ACL 2026</div>
+    </div>
+
+    <div class="content">
+      <div class="tldr-section">
+        <div class="tldr-title">TL;DR</div>
+        <div class="tldr-text">
+          We release real and codec-generated samples for deepfake detection under multiple datasets (C0/C1/C2).
+        </div>
+        <a href="#" class="download-btn">✨ Dataset will be available soon — stay tuned</a>
+      </div>
+
+      <div class="samples-section">
+        <div class="samples-title">Fake and Real Speech Samples</div>
+        <div class="samples-desc muted" id="summaryText"></div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Codec Model Used</th>
+              <th>GT File ID</th>
+              <th>GT Speech</th>
+              <th>Generated Speech</th>
+              <th>Dataset</th>
+            </tr>
+          </thead>
+          <tbody id="samplesBody">
+            <!-- ✅ Rows are injected by JS -->
+          </tbody>
+        </table>
+
+        <div class="muted" style="margin-top:10px;" id="errorText"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- Acknowledgment: Built using clinical datasets. © 2026 Authors -->
+    </div>
+  </div>
+
+  <!-- ✅ Your manifest must be loaded BEFORE the rendering script -->
+  <script src="audio/manifest.js"></script>
+
+  <script>
+    (function () {
+      const tbody = document.getElementById("samplesBody");
+      const errorText = document.getElementById("errorText");
+      const summaryText = document.getElementById("summaryText");
+
+      function escapeHtml(s) {
+        return String(s ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function makeAudioCell(src) {
+        const td = document.createElement("td");
+        td.className = "audio-cell";
+
+        const audio = document.createElement("audio");
+        audio.controls = true;
+        audio.preload = "none";
+
+        const source = document.createElement("source");
+        source.src = src;
+        source.type = "audio/wav";
+
+        audio.appendChild(source);
+        td.appendChild(audio);
+        return td;
+      }
+
+      function makePill(text) {
+        const span = document.createElement("span");
+        span.className = "lang-pill";
+        span.textContent = text;
+        return span;
+      }
+
+      function render(manifest) {
+        tbody.innerHTML = "";
+        errorText.textContent = "";
+
+        if (!Array.isArray(manifest) || manifest.length === 0) {
+          errorText.textContent = "No samples found in MANIFEST_RAW.";
+          return;
+        }
+
+        // Optional: stable sorting (dataset -> codec -> gt_id)
+        const rows = [...manifest].sort((a, b) => {
+          const da = String(a.condition ?? "");
+          const db = String(b.condition ?? "");
+          if (da !== db) return da.localeCompare(db);
+          const ca = String(a.codec ?? "");
+          const cb = String(b.codec ?? "");
+          if (ca !== cb) return ca.localeCompare(cb);
+          return String(a.gt_id ?? "").localeCompare(String(b.gt_id ?? ""));
+        });
+
+        // Summary line
+        const datasets = new Set(rows.map(r => String(r.condition ?? "").trim()).filter(Boolean));
+        const codecs = new Set(rows.map(r => String(r.codec ?? "").trim()).filter(Boolean));
+        summaryText.textContent = `Showing ${rows.length} samples • Datasets: ${[...datasets].join(", ")} • Codecs: ${[...codecs].join(", ")}`;
+
+        for (const item of rows) {
+          const tr = document.createElement("tr");
+
+          // codec
+          const tdCodec = document.createElement("td");
+          tdCodec.textContent = item.codec ?? "-";
+          tr.appendChild(tdCodec);
+
+          // gt_id
+          const tdGtId = document.createElement("td");
+          tdGtId.textContent = item.gt_id ?? item.id ?? "-";
+          tr.appendChild(tdGtId);
+
+          // gt audio
+          tr.appendChild(makeAudioCell(item.gt_url ?? ""));
+
+          // gen audio
+          tr.appendChild(makeAudioCell(item.gen_url ?? ""));
+
+          // dataset (condition)
+          const tdDataset = document.createElement("td");
+          tdDataset.appendChild(makePill(item.condition ?? "-"));
+          tr.appendChild(tdDataset);
+
+          tbody.appendChild(tr);
+        }
+      }
+
+      // ✅ Read from your JS global
+      const manifest = window.MANIFEST_RAW;
+
+      if (!manifest) {
+        errorText.innerHTML =
+          "MANIFEST_RAW not found. Make sure <code>manifest.js</code> is loaded before this script.";
+        return;
+      }
+
+      render(manifest);
+    })();
+  </script>
+</body>
+</html>
