@@ -202,8 +202,8 @@
           <thead>
             <tr>
               <th>Codec Model Used</th>
-              <th>GT File ID</th>
-              <th>GT Speech</th>
+              <th>Ground truth File ID</th>
+              <th>Ground truth Speech</th>
               <th>Generated Speech</th>
               <th>Dataset</th>
             </tr>
@@ -236,12 +236,38 @@
         protocol: "seen",
         speaker_id: "spk_001",
         codec_family: "Encodec"
+      }
+            ,
+      {
+        id: "utt_0092_C0",
+        gt_id: "utt_0092_C0",
+        gt_url: "audio/Real/C0/2.wav",
+        gen_url: "audio/Fake/C0/2_hubertsiuzdak_snac_24khz.wav",
+        condition: "C0",
+        codec: "encodec_24kHz",
+        split: "val",
+        protocol: "unseen",
+        speaker_id: "spk_019",
+        codec_family: "Encodec"
       },
       {
         id: "utt_0042_C1",
         gt_id: "utt_0042_C1",
         gt_url: "audio/Real/C1/1.wav",
         gen_url: "audio/Fake/C1/1_hubertsiuzdak_snac_24khz.wav",
+        condition: "C1",
+        codec: "SpeechTokenizer",
+        split: "val",
+        protocol: "unseen",
+        speaker_id: "spk_019",
+        codec_family: "Tokenizer"
+      }
+      ,
+      {
+        id: "utt_0078_C1",
+        gt_id: "utt_0078_C1",
+        gt_url: "audio/Real/C1/2.wav",
+        gen_url: "audio/Fake/C1/2_hubertsiuzdak_snac_24khz.wav",
         condition: "C1",
         codec: "SpeechTokenizer",
         split: "val",
