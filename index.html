@@ -226,24 +226,37 @@
   <script>
     window.MANIFEST_RAW = [
       {
-        id: "utt_0001",
-        gt_id: "utt_0001",
-        gt_url: "audio/real/C0/utt_0001.wav",
-        gen_url: "audio/generated/C0/Encodec_24kHz/utt_0001.wav",
+        id: "utt_0001_C0",
+        gt_id: "utt_0001_C0",
+        gt_url: "audio/Real/C0/1.wav",
+        gen_url: "audio/Fake/C0/1_hubertsiuzdak_snac_24khz.wav",
         condition: "C0",
-        codec: "Encodec_24kHz",
+        codec: "encodec_24kHz",
         split: "test",
         protocol: "seen",
         speaker_id: "spk_001",
         codec_family: "Encodec"
       },
       {
-        id: "utt_0042",
-        gt_id: "utt_0042",
-        gt_url: "audio/real/C1/utt_0042.wav",
-        gen_url: "audio/generated/C1/SpeechTokenizer/utt_0042.wav",
+        id: "utt_0042_C1",
+        gt_id: "utt_0042_C1",
+        gt_url: "audio/Real/C1/1.wav",
+        gen_url: "audio/Fake/C1/1_hubertsiuzdak_snac_24khz.wav",
         condition: "C1",
         codec: "SpeechTokenizer",
+        split: "val",
+        protocol: "unseen",
+        speaker_id: "spk_019",
+        codec_family: "Tokenizer"
+      }
+      ,
+      {
+        id: "utt_0042_C2",
+        gt_id: "utt_0042_C2",
+        gt_url: "audio/Real/C2/1.wav",
+        gen_url: "audio/Fake/C2/1_hubertsiuzdak_snac_24khz.wav",
+        condition: "C2",
+        codec: "dac_24khz",
         split: "val",
         protocol: "unseen",
         speaker_id: "spk_019",
